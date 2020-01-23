@@ -1,0 +1,19 @@
+{
+  "name": "alurabank",
+  "version": "1.0.0",
+  "description": "Projeto da formação Alura para Angula, curso de typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tscompile": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@localhost:front-end/alurabank.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.7.5"
+  }
+}
