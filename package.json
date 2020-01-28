@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tscompile": "tsc",
-    "tsstart": "tsc -w"
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "server": "lite-server --baseDir=app",
+    "start": "concurrently \"npm run watch\" \"npm run server\""
   },
   "repository": {
     "type": "git",
@@ -16,6 +18,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jquery": "^3.2.1",
+    "concurrently": "^5.1.0",
+    "lite-server": "^2.5.4",
     "typescript": "^3.7.5"
   }
 }
