@@ -1,4 +1,10 @@
-class NegociacoesView extends AbstractView<Negociacoes> {
+import { Negociacoes } from "../models/Negociacoes";
+import { AbstractView } from "./AbstractView";
+
+/**
+ * Template com o conteúdo da tabela de negociações
+ */
+export class NegociacoesView extends AbstractView<Negociacoes> {
     
     protected template(negociacoes: Negociacoes): string {
         return negociacoes.toArray().map(negociacao => 
