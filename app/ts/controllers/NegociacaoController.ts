@@ -26,8 +26,13 @@ export class NegociacaoController {
                                         parseFloat(this._inputValor.value)
                                 );
 
+        if (!negociacao.emDiaUtil()) {
+            this._mensagemView.error("Negociação só permitida em dias úteis!");
+            return;
+        }
+
         this._negociacoes.adiciona(negociacao);
         this._negociacoesView.update(this._negociacoes);
-        this._mensagemView.update("Negociação inserida com sucesso!");
+        this._mensagemView.success("Negociação inserida com sucesso!");
     }
 }

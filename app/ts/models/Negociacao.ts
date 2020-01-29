@@ -11,4 +11,13 @@ export class Negociacao {
     get volume() {
         return this.quantidade * this.valor;
     }
+
+    emDiaUtil(): boolean {
+        return this.data.getDay() != DiasDaSemana.SABADO && this.data.getDay() != DiasDaSemana.DOMINGO;
+    }
+}
+
+enum DiasDaSemana {
+    DOMINGO,
+    SABADO = 6
 }
