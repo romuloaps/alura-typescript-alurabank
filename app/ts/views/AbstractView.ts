@@ -2,7 +2,7 @@ export abstract class AbstractView<T> {
     
     private _elemento: JQuery;
 
-    constructor(selector: string, private _escape?: boolean) {
+    constructor(selector: string, private _escape: boolean = false) {
         this._elemento = $(selector);
     }
 

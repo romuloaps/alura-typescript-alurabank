@@ -7,13 +7,13 @@ export class NegociacaoController {
     private _inputValor: HTMLInputElement;
 
     private _negociacoes = new Negociacoes();
-    private _negociacoesView = new NegociacoesView("#negociacoes-view");
+    private _negociacoesView = new NegociacoesView("#negociacoes-view", true);
     private _mensagemView = new MensagemView("#mensagem-box");
 
     constructor() {
-        this._inputData = document.querySelector("#data");
-        this._inputQuantidade = document.querySelector("#quantidade");
-        this._inputValor = document.querySelector("#valor");
+        this._inputData = <HTMLInputElement> document.querySelector("#data");
+        this._inputQuantidade = <HTMLInputElement> document.querySelector("#quantidade");
+        this._inputValor = <HTMLInputElement> document.querySelector("#valor");
 
         this._negociacoesView.update(this._negociacoes);
     }
