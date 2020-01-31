@@ -1,6 +1,6 @@
-import { Negociacoes, Negociacao } from "../models/index";
+import { Negociacoes, Negociacao, NegociacaoParcial } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
-import { domInject } from "../helpers/decorators/index";
+import { domInject, throttle } from "../helpers/decorators/index";
 
 export class NegociacaoController {
 
@@ -19,6 +19,7 @@ export class NegociacaoController {
         this._negociacoesView.update(this._negociacoes);
     }
 
+    @throttle()
     adiciona(event: Event): void {
         event.preventDefault();
 
@@ -35,5 +36,27 @@ export class NegociacaoController {
         this._negociacoes.adiciona(negociacao);
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.success("Negociação inserida com sucesso!");
+    }
+
+    @throttle()
+    importaDados(event: Event): void {
+
+        function isOk(res: Response): Response {
+            if (res.ok) {
+                return res;
+            } else {
+                throw new Error(`Erro ao importar dados: ${res.status} - ${res.statusText}`);
+            }
+        }
+        
+        fetch("http://localhost:8080/dados")
+            .then(res => isOk(res))
+            .then(res => res.json())
+            .then((dados: NegociacaoParcial[]) => {
+                dados.map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
+                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
+            })
+            .catch(err => console.log(err.message))
     }
 }
