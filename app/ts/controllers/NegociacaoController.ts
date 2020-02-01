@@ -1,6 +1,7 @@
 import { Negociacoes, Negociacao, NegociacaoParcial } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
 import { domInject, throttle } from "../helpers/decorators/index";
+import { NegociacoesService } from "../services/index";
 
 export class NegociacaoController {
 
@@ -12,6 +13,7 @@ export class NegociacaoController {
     private _inputValor: HTMLInputElement;
 
     private _negociacoes = new Negociacoes();
+    private _service = new NegociacoesService();
     private _negociacoesView = new NegociacoesView("#negociacoes-view", true);
     private _mensagemView = new MensagemView("#mensagem-box");
 
@@ -41,22 +43,17 @@ export class NegociacaoController {
     @throttle()
     importaDados(event: Event): void {
 
-        function isOk(res: Response): Response {
-            if (res.ok) {
-                return res;
-            } else {
-                throw new Error(`Erro ao importar dados: ${res.status} - ${res.statusText}`);
-            }
-        }
-        
-        fetch("http://localhost:8080/dados")
-            .then(res => isOk(res))
-            .then(res => res.json())
-            .then((dados: NegociacaoParcial[]) => {
-                dados.map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
-                this._negociacoesView.update(this._negociacoes);
+        this._service
+            .getNegociacoes((res: Response) => {
+                if (res.ok) {
+                    return res;
+                } else {
+                    throw new Error(`Erro ao importar dados: ${res.status} - ${res.statusText}`);
+                }
             })
-            .catch(err => console.log(err.message))
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
+            });
     }
 }
