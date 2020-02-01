@@ -1,5 +1,6 @@
-export class Negociacao {
+import { Imprimivel } from "./Imprimivel";
 
+export class Negociacao implements Imprimivel {
     /**
      * Uso da palavra-chave readonly para transformar os parâmetros em properties "get"
      * @param data 
@@ -14,6 +15,10 @@ export class Negociacao {
 
     emDiaUtil(): boolean {
         return this.data.getDay() != DiasDaSemana.SABADO && this.data.getDay() != DiasDaSemana.DOMINGO;
+    }
+
+    printToString(): void {
+        console.log(JSON.stringify(this));
     }
 }
 

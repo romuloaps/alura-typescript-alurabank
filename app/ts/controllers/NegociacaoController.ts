@@ -2,6 +2,7 @@ import { Negociacoes, Negociacao, NegociacaoParcial } from "../models/index";
 import { MensagemView, NegociacoesView } from "../views/index";
 import { domInject, throttle } from "../helpers/decorators/index";
 import { NegociacoesService } from "../services/index";
+import { print } from "../helpers/Utils";
 
 export class NegociacaoController {
 
@@ -36,6 +37,8 @@ export class NegociacaoController {
         }
 
         this._negociacoes.adiciona(negociacao);
+        print(negociacao, this._negociacoes);
+
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.success("Negociação inserida com sucesso!");
     }
