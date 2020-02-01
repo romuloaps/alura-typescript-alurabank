@@ -54,8 +54,13 @@ export class NegociacaoController {
                     throw new Error(`Erro ao importar dados: ${res.status} - ${res.statusText}`);
                 }
             })
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+            .then(negociacoesParaImportar => {
+
+                const negociacoesJaImportadas = this._negociacoes.toArray();
+
+                negociacoesParaImportar
+                    .filter(negociacao => !this._negociacoes.existe(negociacao))
+                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
                 this._negociacoesView.update(this._negociacoes);
             });
     }

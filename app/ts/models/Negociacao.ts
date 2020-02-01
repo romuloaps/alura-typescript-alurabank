@@ -1,6 +1,7 @@
 import { Imprimivel } from "./Imprimivel";
+import { Igualavel } from "./Igualavel";
 
-export class Negociacao implements Imprimivel {
+export class Negociacao implements Imprimivel, Igualavel<Negociacao> {
     /**
      * Uso da palavra-chave readonly para transformar os parâmetros em properties "get"
      * @param data 
@@ -19,6 +20,14 @@ export class Negociacao implements Imprimivel {
 
     printToString(): void {
         console.log(JSON.stringify(this));
+    }
+
+    isIgual(negociacao: Negociacao): boolean {
+        return this.data.getDate() == negociacao.data.getDate()
+            && this.data.getMonth() == negociacao.data.getMonth()
+            && this.data.getFullYear() == negociacao.data.getFullYear()
+            && this.quantidade == negociacao.quantidade
+            && this.valor == negociacao.valor;
     }
 }
 

@@ -9,6 +9,10 @@ export class Negociacoes implements Imprimivel {
         this._negociacoes.push(negociacao);
     }
 
+    existe(negociacao: Negociacao): boolean {
+        return this._negociacoes.some(negociacaoJaImportada => negociacaoJaImportada.isIgual(negociacao));
+    }
+
     toArray(): Negociacao[] {
         return this._negociacoes.slice();
     }
