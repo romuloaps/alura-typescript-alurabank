@@ -3,7 +3,7 @@
  * 
  * @param timeout 
  */
-export function throttle(timeout = 500) {
+export function throttle(timeout = 300) {
     return function(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor {
 
         const metodoOriginal = descriptor.value;
