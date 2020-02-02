@@ -3,3 +3,4 @@ export * from "./Negociacao";
 export * from "./NegociacaoParcial";
 export * from "./Imprimivel";
 export * from "./Igualavel";
+export * from "./AluraBankObject";

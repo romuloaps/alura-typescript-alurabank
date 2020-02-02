@@ -1,7 +1,8 @@
 import { Imprimivel } from "./Imprimivel";
 import { Igualavel } from "./Igualavel";
+import { AluraBankObject } from "./AluraBankObject";
 
-export class Negociacao implements Imprimivel, Igualavel<Negociacao> {
+export class Negociacao implements AluraBankObject<Negociacao> {
     /**
      * Uso da palavra-chave readonly para transformar os parâmetros em properties "get"
      * @param data 
