@@ -51,7 +51,7 @@ export class NegociacaoController {
                 if (res.ok) {
                     return res;
                 } else {
-                    throw new Error(`Erro ao importar dados: ${res.status} - ${res.statusText}`);
+                    throw new Error("Ocorreu um erro! Não foi possível importar as negociações.");
                 }
             })
             .then(negociacoesParaImportar => {
@@ -62,6 +62,7 @@ export class NegociacaoController {
                     .filter(negociacao => !this._negociacoes.existe(negociacao))
                     .forEach(negociacao => this._negociacoes.adiciona(negociacao));
                 this._negociacoesView.update(this._negociacoes);
-            });
+            })
+            .catch(error => this._mensagemView.error(error.message));
     }
 }
