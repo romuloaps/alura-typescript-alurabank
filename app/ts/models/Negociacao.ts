@@ -1,5 +1,3 @@
-import { Imprimivel } from "./Imprimivel";
-import { Igualavel } from "./Igualavel";
 import { AluraBankObject } from "./AluraBankObject";
 
 export class Negociacao implements AluraBankObject<Negociacao> {
