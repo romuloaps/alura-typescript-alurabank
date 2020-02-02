@@ -44,25 +44,27 @@ export class NegociacaoController {
     }
 
     @throttle()
-    importaDados(event: Event): void {
+    async importaDados(event: Event) {
 
-        this._service
-            .getNegociacoes((res: Response) => {
-                if (res.ok) {
-                    return res;
-                } else {
-                    throw new Error("Ocorreu um erro! Não foi possível importar as negociações.");
-                }
-            })
-            .then(negociacoesParaImportar => {
+        try {
+            const negociacoesParaImportar = await this._service
+                .getNegociacoes((res: Response) => {
+                    if (res.ok) {
+                        return res;
+                    } else {
+                        throw new Error("Ocorreu um erro! Não foi possível importar as negociações.");
+                    }
+                });
 
-                const negociacoesJaImportadas = this._negociacoes.toArray();
+            const negociacoesJaImportadas = this._negociacoes.toArray();
 
-                negociacoesParaImportar
-                    .filter(negociacao => !this._negociacoes.existe(negociacao))
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
-                this._negociacoesView.update(this._negociacoes);
-            })
-            .catch(error => this._mensagemView.error(error.message));
+            negociacoesParaImportar
+                .filter(negociacao => !this._negociacoes.existe(negociacao))
+                .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+            this._negociacoesView.update(this._negociacoes);
+            
+        } catch (error) {
+            this._mensagemView.error(error.message);
+        }
     }
 }
